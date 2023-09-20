@@ -9,7 +9,12 @@ class Enum(commands.Cog):
         self.enable = False
 
         self.cmd_dict = {"nmap" : self.__nmap}
-          
+    
+    @commands.is_owner()
+    @commands.command()
+    async def enable_enum(self,ctx : commands.Context,enable : bool):
+        self.enable = enable
+
     async def __check_authorization(self,interaction,cmd,args = None):
         if not self.enable :
             await interaction.response.send_message("Enum cmd not enable")
