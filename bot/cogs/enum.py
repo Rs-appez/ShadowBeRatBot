@@ -1,21 +1,34 @@
 from discord import Interaction, slash_command
 from nextcord.ext import commands
 from bot.models.enum.nmap import Nmap
-from bot.models.enum.sanitize import Sanitize
 
 class Enum(commands.Cog):
     """Enum cmd"""
     def __init__(self,bot):
         self.bot = bot
+        self.enable = False
 
-    @slash_command(description="perform a nmap scan" )
-    async def nmap(self,interaction : Interaction, ip : str):
+        self.cmd_dict = {"nmap" : self.__nmap}
+          
+    async def __check_authorization(self,interaction,cmd,args = None):
+        if not self.enable :
+            await interaction.response.send_message("Enum cmd not enable")
+        else :
+            await self.cmd_dict[cmd](interaction,args)
+
+    @slash_command(name='nmap',description="perform a nmap scan" )
+    async def nmap_cmd(self,interaction : Interaction, ip : str):
+        await self.__check_authorization(interaction, "nmap",ip)      
+
+    async def __nmap(self,interaction,ip):
         try :
-            ip_san = Sanitize.ip(ip)
+            nmap = Nmap(ip)
             await interaction.response.defer(with_message=True)
-            await Nmap(ip_san).scan(interaction)
+            await nmap.scan(interaction)
+
         except TypeError:
             await interaction.response.send_message("Error in IP")
+
         
         
   
