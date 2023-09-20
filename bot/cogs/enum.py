@@ -21,7 +21,7 @@ class Enum(commands.Cog):
         else :
             await self.cmd_dict[cmd](interaction,args)
 
-    @slash_command(name='nmap',description="perform a nmap scan" )
+    @slash_command(name='nmap',description="perform a nmap scan",dm_permission=False )
     async def nmap_cmd(self,interaction : Interaction, ip : str):
         await self.__check_authorization(interaction, "nmap",ip)      
 

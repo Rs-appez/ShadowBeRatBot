@@ -9,18 +9,18 @@ class VPN(commands.Cog):
         self.bot = bot
         self.vpn = Vpn(bot)
 
-    @slash_command(description="set vpn connection" )
+    @slash_command(description="set vpn connection" ,dm_permission=False)
     async def set_vpn(self,interaction : Interaction, vpn_file : Attachment):
         await interaction.response.defer(with_message=True)
         await self.vpn.setup(interaction,vpn_file)
 
 
-    @slash_command(description="start vpn connection" )
+    @slash_command(description="start vpn connection",dm_permission=False )
     async def start_vpn(self,interaction : Interaction):
             await interaction.response.defer(with_message=True)
             await self.vpn.start(interaction)
 
-    @slash_command(description="stop vpn connection" )
+    @slash_command(description="stop vpn connection" ,dm_permission=False)
     async def stop_vpn(self,interaction : Interaction):
         await interaction.response.defer(with_message=True)
         await self.vpn.stop(interaction)
