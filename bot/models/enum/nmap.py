@@ -2,12 +2,13 @@ import os
 import config
 from nextcord import File
 import uuid
-from bot.models.enum.sanitize import Sanitize
+from .enum import Enum
 
-class Nmap():
+class Nmap(Enum):
     
     def __init__(self,ip):
-        self.ip = Sanitize.ip(ip)
+
+        super().__init__(ip)
 
     async def scan(self,interaction):
         scan_name = uuid.uuid1()
