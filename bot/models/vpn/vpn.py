@@ -16,7 +16,7 @@ class Vpn():
         else :
             if self.ovpn_set :
                 self.running = True
-                code = os.system(f"openvpn {VPN_FILE_PATH} &")
+                code = os.system(f"openvpn {VPN_FILE_PATH} 1>/dev/null &")
                 if code == 0 :
                     await self.update_vpn_status(interaction)
                 else :
